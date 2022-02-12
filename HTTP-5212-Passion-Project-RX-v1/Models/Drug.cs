@@ -16,4 +16,11 @@ namespace HTTP_5212_Passion_Project_RX_v1.Models
         // Formulatioin specifies physical form of drug eg: capsules, tablets
         public string Formulation { get; set; }
     }
+
+    public class DrugDto
+    {
+        public int DrugID { get; set; }
+        public string DrugName { get; set; }
+        public string Dosage { get; set; }
+    }
 }

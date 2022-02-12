@@ -18,7 +18,7 @@ namespace HTTP_5212_Passion_Project_RX_v1.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-
+        // using DTO instead of regular function
         // GET: api/PrescriptionData/ListPrescriptions
         /*[HttpGet]
         public IQueryable<Prescription> ListPrescriptions()
@@ -28,7 +28,16 @@ namespace HTTP_5212_Passion_Project_RX_v1.Controllers
         }*/
 
 
-        // GET: api/PrescriptionData/ListPrescriptions
+        /// <summary>
+        /// Returns all the available Prescription given by a doctor (doctor name) for a patient (patient Name) in the system 
+        /// </summary>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: all Prescriptions in the database
+        /// <example>
+        /// GET: api/PrescriptionData/ListPrescriptions
+        /// </example>
+        /// </returns>
         [HttpGet]
         public IEnumerable<PrescriptionDto> ListPrescriptions()
         {
@@ -38,15 +47,25 @@ namespace HTTP_5212_Passion_Project_RX_v1.Controllers
             Prescriptions.ForEach(a => PrescriptionDtos.Add(new PrescriptionDto()
             {
                 PrescriptionID = a.PrescriptionID,
-                DoctorName = a.DoctorName
+                DoctorName = a.DoctorName,
+                PatientName = a.PatientName
             }));
          
             return PrescriptionDtos;
         }
-       
 
 
-        // GET: api/PrescriptionData/FindPrescription/1
+        /// <summary>
+        /// Returns Prescription details matching the given precription id
+        /// </summary>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: A prescription in the system matching up the prescriptionID which is Primary Key
+        /// </returns>
+        /// <param name="drugID">Primary key of the Prescription</param>
+        /// <example>
+        /// GET: api/PrescriptionData/FindPrescription/1
+        /// </example>   
         [Route("api/prescriptiondata/findprescription/{prescriptionID}")]
         [ResponseType(typeof(Prescription))]
         [HttpGet]
@@ -63,8 +82,19 @@ namespace HTTP_5212_Passion_Project_RX_v1.Controllers
             return Ok(prescription);
         }
 
-
-        // POST: api/PrescriptionData/UpdatePrescription/5
+        /// <summary>
+        /// Updates a particular Prescription in the system with POST Data Input
+        /// </summary>
+        /// <param name="id">Represents the PrescriptionID Primary Key</param>
+        /// <param name="drug">JSON Form Data of a Prescription including id of Prescription to be updated</param>
+        /// <returns>
+        /// HEADER: 204 (Success, No Content Response) or
+        /// HEADER: 400 (Not Found)
+        /// </returns>
+        /// <example>
+        /// POST: api/PrescriptionData/UpdatePrescription/5
+        /// Prescription Json Object
+        /// </example>
         [Route("api/prescriptiondata/updateprescription/{id}")]
         [ResponseType(typeof(void))]
         [HttpPost]
@@ -101,7 +131,21 @@ namespace HTTP_5212_Passion_Project_RX_v1.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/PrescriptionData/AddPrescription
+        /// <summary>
+        /// Add a new Prescription to the system
+        /// </summary>
+        /// <param name="drug">JSON form data of a new Prescription (no id)</param> 
+        /// <returns>
+        /// HEADER: 201 (Created)
+        /// CONTENT: Prescription Id, Prescription Data
+        /// or
+        /// HEADER: 404 (Bad request)
+        /// </returns>
+        /// <example>
+        /// POST: api/PrescriptionData/AddPrescription
+        /// FORM DATA: Prescription json object
+        /// </example>
+        // 
         //[Route("api/prescriptiondata/addprescription")]
         [ResponseType(typeof(Prescription))]
         [HttpPost]
@@ -117,7 +161,19 @@ namespace HTTP_5212_Passion_Project_RX_v1.Controllers
             return CreatedAtRoute("DefaultApi", new { id = prescription.PrescriptionID }, prescription);
         }
 
-        // POST: api/PrescriptionData/DeletePrescription/5
+
+        /// <summary>
+        /// Deletes a Prescription from the system matching to the given Prescription Id
+        /// </summary>
+        /// <param name="id">The primary key of the Prescription</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <example>
+        ///  DELETE: api/PrescriptionData/DeletePrescription/5
+        /// </example> 
         //[Route("api/prescriptiondata/deleteprescription/{id}")]
         [ResponseType(typeof(Prescription))]
         [HttpPost]

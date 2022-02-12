@@ -16,7 +16,16 @@ namespace HTTP_5212_Passion_Project_RX_v1.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: api/DrugData/Listdrugs
+        /// <summary>
+        /// Returns all the available drugs in the system 
+        /// </summary>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: all drugs in the database
+        /// <example>
+        /// GET: api/DrugData/Listdrugs
+        /// </example>
+        /// </returns>
         [Route("api/DrugData/Listdrugs")]
         [HttpGet]
         public IQueryable<Drug> ListDrugs()
@@ -24,8 +33,17 @@ namespace HTTP_5212_Passion_Project_RX_v1.Controllers
             return db.Drugs;
         }
 
-
-        // GET: /api/drugdata/finddrug/2
+        /// <summary>
+        /// Returns drug details of a drug matching the given id
+        /// </summary>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// CONTENT: A drug in the system matching up the drugID which is Primary Key
+        /// </returns>
+        /// <param name="drugID">Primary key of the drug</param>
+        /// <example>
+        /// GET: /api/drugdata/finddrug/2
+        /// </example>   
         [Route("api/DrugData/finddrug/{drugId}")]
         [ResponseType(typeof(Drug))]
         [HttpGet]
@@ -40,7 +58,19 @@ namespace HTTP_5212_Passion_Project_RX_v1.Controllers
             return Ok(drug);
         }
 
-        // PUT: api/DrugData/updateDrug/5
+        /// <summary>
+        /// Updates a particular drug in the system with POST Data Input
+        /// </summary>
+        /// <param name="id">Represents the drugID Primary Key</param>
+        /// <param name="drug">JSON Form Data of a Drug including id of drug to be updated</param>
+        /// <returns>
+        /// HEADER: 204 (Success, No Content Response) or
+        /// HEADER: 400 (Not Found)
+        /// </returns>
+        /// <example>
+        /// POST: api/DrugData/updateDrug/5
+        /// Drug Json Object
+        /// </example>
         [Route("api/DrugData/updateDrug/{id}")]
         [ResponseType(typeof(void))]
         [HttpPost]
@@ -77,8 +107,20 @@ namespace HTTP_5212_Passion_Project_RX_v1.Controllers
             return StatusCode(HttpStatusCode.NoContent);
         }
 
-        // POST: api/DrugData/addDrug
-       // [Route("api/DrugData/addDrug")]
+        /// <summary>
+        /// Add a new drug to the system
+        /// </summary>
+        /// <param name="drug">JSON form data of a new drug (no id)</param> 
+        /// <returns>
+        /// HEADER: 201 (Created)
+        /// CONTENT: Drug Id, Drug Data
+        /// or
+        /// HEADER: 404 (Bad request)
+        /// </returns>
+        /// <example>
+        /// POST: api/DrugData/addDrug
+        /// FORM DATA: Drug json object
+        /// </example>
         [ResponseType(typeof(Drug))]
         [HttpPost]
         public IHttpActionResult AddDrug(Drug drug)
@@ -94,7 +136,18 @@ namespace HTTP_5212_Passion_Project_RX_v1.Controllers
             return CreatedAtRoute("DefaultApi", new { id = drug.DrugID }, drug);
         }
 
-        // DELETE: api/DrugData/deleteDrug/5
+        /// <summary>
+        /// Deletes a Drug from the system matching to the given Drug Id
+        /// </summary>
+        /// <param name="id">The primary key of the Drug</param>
+        /// <returns>
+        /// HEADER: 200 (OK)
+        /// or
+        /// HEADER: 404 (NOT FOUND)
+        /// </returns>
+        /// <example>
+        ///  DELETE: api/DrugData/deleteDrug/5
+        /// </example>
         [Route("api/DrugData/deleteDrug/{id}")]
         [ResponseType(typeof(Drug))]
         [HttpPost]

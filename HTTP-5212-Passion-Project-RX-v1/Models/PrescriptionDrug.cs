@@ -36,16 +36,12 @@ namespace HTTP_5212_Passion_Project_RX_v1.Models
     public class PrescriptionDrugDto
     {
         public int ID { get; set; }
-        public int Quantity { get; set; }
         public int PrescriptionID { get; set; }
-    
         public string DoctorName { get; set; }
-
         public string PatientName { get; set; }
-        public int DrugId { get; set; }
-
         public string DrugName { get; set; }
-
+        public int Quantity { get; set; }
         public string Dosage { get; set; }
+        public string Sig { get; set; }
     }
 }

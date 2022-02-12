@@ -18,5 +18,6 @@ namespace HTTP_5212_Passion_Project_RX_v1.Models
     {
         public int PrescriptionID { get; set; }
         public string DoctorName { get; set; }
+        public string PatientName { get; set; }
     }
 }
